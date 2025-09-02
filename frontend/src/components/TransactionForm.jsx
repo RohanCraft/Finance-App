@@ -5,6 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Navbar from "./Navbar";
 import { getUserFromStorage } from "../utils/getUserFromStorage";
 import { createTransaction } from "../api/transactionApi";
+import { FaMoneyBillWave, FaInfoCircle } from "react-icons/fa";
 
 const TransactionForm = () => {
   const navigate = useNavigate();
@@ -18,9 +19,10 @@ const TransactionForm = () => {
     if (!user) {
       toast.error("User not found. Please log in again.");
       navigate("/login");
+    } else {
+      setUserId(user.userId);
     }
-    setUserId(user.userId);
-  }, []);
+  }, [navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -50,22 +52,25 @@ const TransactionForm = () => {
   return (
     <>
       <Navbar />
-      <div className="min-h-screen bg-gray-100 flex items-center justify-center px-4 pt-16">
-        <div className="w-full max-w-md bg-white rounded-xl shadow-lg p-6 sm:p-8">
-          <h2 className="text-2xl font-semibold text-center text-gray-800 mb-6">
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100 flex items-center justify-center px-4 pt-16">
+        <div className="w-full max-w-md bg-white rounded-2xl shadow-2xl p-8 sm:p-10">
+          <h2 className="text-2xl font-bold text-gray-800 mb-2 text-center">
             Add New Transaction
           </h2>
+          <p className="text-sm text-gray-500 mb-6 text-center">
+            Record your income or expenses to keep your finances on track.
+          </p>
 
           <form onSubmit={handleSubmit} className="space-y-5">
             {/* Type */}
-            <div>
+            <div className="relative">
               <label className="block text-sm font-medium text-gray-700 mb-1">
                 Type
               </label>
               <select
-                className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
                 ref={typeRef}
                 required
+                className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
               >
                 <option value="">Select</option>
                 <option value="income">Income</option>
@@ -74,37 +79,43 @@ const TransactionForm = () => {
             </div>
 
             {/* Amount */}
-            <div>
+            <div className="relative">
               <label className="block text-sm font-medium text-gray-700 mb-1">
                 Amount
               </label>
-              <input
-                type="number"
-                ref={amountRef}
-                placeholder="e.g. 100"
-                className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                required
-              />
+              <div className="relative">
+                <span className="absolute left-3 top-2.5 text-gray-400">₹</span>
+                <input
+                  type="number"
+                  ref={amountRef}
+                  placeholder="100"
+                  className="w-full pl-7 border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                  required
+                />
+              </div>
             </div>
 
             {/* Description */}
-            <div>
+            <div className="relative">
               <label className="block text-sm font-medium text-gray-700 mb-1">
                 Description
               </label>
-              <input
-                type="text"
-                ref={descriptionRef}
-                placeholder="e.g. Grocery"
-                className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                required
-              />
+              <div className="flex items-center border border-gray-300 rounded-lg px-3 py-2 focus-within:ring-2 focus-within:ring-blue-500">
+                <FaInfoCircle className="text-gray-400 mr-2" />
+                <input
+                  type="text"
+                  ref={descriptionRef}
+                  placeholder="e.g. Grocery"
+                  className="w-full text-sm focus:outline-none"
+                  required
+                />
+              </div>
             </div>
 
             {/* Submit Button */}
             <button
               type="submit"
-              className="w-full bg-blue-600 text-white py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition duration-200"
+              className="w-full bg-blue-600 text-white py-2 rounded-lg text-sm font-semibold hover:bg-blue-700 shadow-md transition transform hover:-translate-y-1"
             >
               Add Transaction
             </button>

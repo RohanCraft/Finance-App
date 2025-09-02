@@ -1,17 +1,18 @@
-import React, { useEffect, useState } from 'react';
-import Navbar from '../components/Navbar';
-import { getUserFromStorage } from '../utils/getUserFromStorage';
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { deleteTransaction, getTransactions } from '../api/transactionApi';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import Navbar from "../components/Navbar";
+import { getUserFromStorage } from "../utils/getUserFromStorage";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { deleteTransaction, getTransactions } from "../api/transactionApi";
+import { useNavigate } from "react-router-dom";
+import { FaEdit, FaTrash } from "react-icons/fa";
 
 const Transactions = () => {
   const navigate = useNavigate();
   const [userId, setUserId] = useState(null);
   const [transactions, setTransactions] = useState([]);
   const [filtered, setFiltered] = useState([]);
-  const [filterType, setFilterType] = useState('');
+  const [filterType, setFilterType] = useState("");
 
   useEffect(() => {
     const fetchTransactions = async () => {
@@ -33,7 +34,9 @@ const Transactions = () => {
   }, []);
 
   const handleEdit = (txn) => {
-    navigate(`/editTransaction/${txn._id}`, { state: { transaction: txn, userId } });
+    navigate(`/editTransaction/${txn._id}`, {
+      state: { transaction: txn, userId },
+    });
   };
 
   const handleDelete = (id) => {
@@ -45,7 +48,9 @@ const Transactions = () => {
             const updated = transactions.filter((txn) => txn._id !== id);
             setTransactions(updated);
             setFiltered(
-              filterType ? updated.filter((txn) => txn.type === filterType) : updated
+              filterType
+                ? updated.filter((txn) => txn.type === filterType)
+                : updated
             );
             toast.success("Transaction deleted successfully!");
           }
@@ -61,7 +66,7 @@ const Transactions = () => {
   const handleFilterChange = (e) => {
     const value = e.target.value;
     setFilterType(value);
-    if (value === '') {
+    if (value === "") {
       setFiltered(transactions);
     } else {
       setFiltered(transactions.filter((txn) => txn.type === value));
@@ -71,10 +76,12 @@ const Transactions = () => {
   return (
     <>
       <Navbar />
-      <div className="min-h-screen px-4 pt-8 bg-gray-100">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex justify-between items-center mb-8">
-            <h1 className="text-3xl font-bold text-gray-800">All Transactions</h1>
+      <div className="min-h-screen px-4 pt-8 bg-gradient-to-br from-blue-50 via-blue-100 to-gray-100">
+        <div className="max-w-7xl mx-auto space-y-6">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 md:mb-8">
+            <h1 className="text-2xl md:text-3xl font-bold text-gray-800 mb-4 md:mb-0">
+              All Transactions
+            </h1>
             <select
               value={filterType}
               onChange={handleFilterChange}
@@ -86,49 +93,56 @@ const Transactions = () => {
             </select>
           </div>
 
-          <div className="overflow-x-auto bg-white shadow rounded-xl">
+          <div className="overflow-x-auto bg-white shadow-lg rounded-2xl">
             <table className="min-w-full text-sm text-gray-700">
-              <thead className="bg-blue-600 text-white text-left text-xs uppercase tracking-wider">
+              <thead className="bg-gradient-to-r from-blue-500 to-blue-700 text-white text-left text-xs uppercase tracking-wider rounded-t-xl">
                 <tr>
-                  <th className="px-6 py-4">Created At</th>
-                  <th className="px-6 py-4">Updated At</th>
-                  <th className="px-6 py-4">Type</th>
-                  <th className="px-6 py-4">Description</th>
-                  <th className="px-6 py-4">Amount</th>
-                  <th className="px-6 py-4 text-center">Actions</th>
+                  <th className="px-4 py-3">Created At</th>
+                  <th className="px-4 py-3">Updated At</th>
+                  <th className="px-4 py-3">Type</th>
+                  <th className="px-4 py-3">Description</th>
+                  <th className="px-4 py-3">Amount</th>
+                  <th className="px-4 py-3 text-center">Actions</th>
                 </tr>
               </thead>
               <tbody>
                 {filtered.length > 0 ? (
                   filtered.map((txn) => (
-                    <tr key={txn._id} className="border-t hover:bg-gray-50 transition">
-                      <td className="px-6 py-4">
+                    <tr
+                      key={txn._id}
+                      className="border-b hover:bg-gray-50 transition duration-200"
+                    >
+                      <td className="px-4 py-3">
                         {new Date(txn.createdAt).toLocaleDateString()}
                       </td>
-                      <td className="px-6 py-4">
+                      <td className="px-4 py-3">
                         {new Date(txn.updatedAt).toLocaleDateString()}
                       </td>
-                      <td className="px-6 py-4 capitalize">{txn.type}</td>
-                      <td className="px-6 py-4">{txn.description}</td>
+                      <td className="px-4 py-3 capitalize font-medium">
+                        {txn.type}
+                      </td>
+                      <td className="px-4 py-3">{txn.description}</td>
                       <td
-                        className={`px-6 py-4 font-medium ${
-                          txn.type === 'income' ? 'text-green-600' : 'text-red-500'
+                        className={`px-4 py-3 font-semibold ${
+                          txn.type === "income"
+                            ? "text-green-600"
+                            : "text-red-500"
                         }`}
                       >
-                        {txn.type === 'income' ? '+' : '-'} ₹{txn.amount}
+                        {txn.type === "income" ? "+" : "-"} ₹{txn.amount}
                       </td>
-                      <td className="px-6 py-4 text-center space-x-2">
+                      <td className="px-4 py-3 text-center space-x-2 flex flex-col md:flex-row items-center justify-center">
                         <button
                           onClick={() => handleEdit(txn)}
-                          className="bg-yellow-400 hover:bg-yellow-500 text-white px-3 py-1 rounded-md text-xs"
+                          className="bg-yellow-400 hover:bg-yellow-500 text-white px-3 py-1 rounded-md text-xs flex items-center gap-1 mb-2 md:mb-0"
                         >
-                          Edit
+                          <FaEdit /> Edit
                         </button>
                         <button
                           onClick={() => handleDelete(txn._id)}
-                          className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-md text-xs"
+                          className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-md text-xs flex items-center gap-1"
                         >
-                          Delete
+                          <FaTrash /> Delete
                         </button>
                       </td>
                     </tr>

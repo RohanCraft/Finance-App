@@ -33,15 +33,15 @@ const TransactionCard = () => {
   }, []);
 
   return (
-    <div className="bg-white shadow rounded-xl p-6">
-      <div className="flex items-center justify-between mb-4">
-        <h2 className="text-lg font-semibold text-gray-700">
+    <div className="bg-gradient-to-br from-white via-blue-50 to-blue-100 shadow-xl rounded-2xl p-6">
+      <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-6">
+        <h2 className="text-lg md:text-xl font-semibold text-gray-800 mb-4 md:mb-0">
           {transactions.length
             ? `Recent Transactions (${transactions.length})`
             : "No Transactions Found"}
         </h2>
         <button
-          className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm"
+          className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-full text-sm shadow-md transition transform hover:-translate-y-1"
           onClick={() => navigate("/transactionForm")}
         >
           Add Transaction
@@ -50,31 +50,37 @@ const TransactionCard = () => {
 
       {transactions.length > 0 && (
         <div className="overflow-x-auto">
-          <table className="min-w-full text-sm">
-            <thead className="bg-gray-100 text-gray-600">
+          <table className="min-w-full text-sm text-gray-700">
+            <thead className="bg-blue-500 text-white text-left text-xs uppercase tracking-wider rounded-t-xl">
               <tr>
-                <th className="text-left px-4 py-2">Date</th>
-                <th className="text-left px-4 py-2">Type</th>
-                <th className="text-left px-4 py-2">Description</th>
-                <th className="text-left px-4 py-2">Amount</th>
+                <th className="px-4 py-2">Date</th>
+                <th className="px-4 py-2">Type</th>
+                <th className="px-4 py-2">Description</th>
+                <th className="px-4 py-2">Amount</th>
               </tr>
             </thead>
             <tbody>
               {transactions.map((txn) => (
                 <tr
                   key={txn._id}
-                  className="border-t hover:bg-gray-50 transition"
+                  className="border-b hover:bg-gray-100 transition duration-200"
                 >
                   <td className="px-4 py-2">
                     {new Date(txn.createdAt).toLocaleDateString()}
                   </td>
-                  <td className="px-4 py-2 capitalize">{txn.type}</td>
+                  <td className="px-4 py-2">
+                    <span
+                      className={`px-2 py-1 rounded-full text-white text-xs font-semibold ${
+                        txn.type === "income" ? "bg-green-500" : "bg-red-500"
+                      }`}
+                    >
+                      {txn.type.toUpperCase()}
+                    </span>
+                  </td>
                   <td className="px-4 py-2">{txn.description}</td>
                   <td
                     className={`px-4 py-2 font-semibold ${
-                      txn.type === "income"
-                        ? "text-green-600"
-                        : "text-red-600"
+                      txn.type === "income" ? "text-green-600" : "text-red-600"
                     }`}
                   >
                     {txn.type === "income" ? "+" : "-"} ₹
