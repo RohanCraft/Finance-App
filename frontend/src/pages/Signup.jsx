@@ -11,7 +11,8 @@ const Signup = () => {
   const emailRef = useRef();
   const passwordRef = useRef();
   const navigate = useNavigate();
-  const API_URL = "http://localhost:5001/api/auth/signup";
+  const API_URL =
+    "https://finance-app-backend-e0xc.onrender.com/api/auth/signup";
 
   useEffect(() => {
     setFadeIn(true);

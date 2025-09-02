@@ -1,6 +1,7 @@
 import { toast } from "react-toastify";
 
-const API_URL = "http://localhost:5001/api/transactions";
+const API_URL =
+  "https://finance-app-backend-e0xc.onrender.com/api/transactions";
 
 // Add a new transaction
 export const createTransaction = async (data) => {
