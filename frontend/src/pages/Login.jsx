@@ -45,7 +45,15 @@ const Login = () => {
 
   return (
     <div className="min-h-screen flex flex-col md:flex-row">
-      {/* Left Side Gradient / Illustration */}
+      {/* Mobile Top Gradient */}
+      <div className="flex md:hidden w-full bg-gradient-to-tr from-blue-500 to-blue-700 items-center justify-center py-10">
+        <div className="text-white text-center px-4">
+          <h1 className="text-3xl font-extrabold mb-2">Welcome Back!</h1>
+          <p className="text-base">Access your finance dashboard securely</p>
+        </div>
+      </div>
+
+      {/* Desktop Gradient */}
       <div className="hidden md:flex w-1/2 bg-gradient-to-tr from-blue-500 to-blue-700 items-center justify-center">
         <div className="text-white text-center px-8">
           <h1 className="text-4xl font-extrabold mb-4">Welcome Back!</h1>
@@ -53,51 +61,43 @@ const Login = () => {
         </div>
       </div>
 
-      {/* Right Side Form */}
+      {/* Form */}
       <div
         className={`flex w-full md:w-1/2 items-center justify-center bg-gray-100 px-4 sm:px-6 lg:px-8 transition-opacity duration-1000 ${
           fadeIn ? "opacity-100" : "opacity-0"
         }`}
       >
-        <div className="w-full max-w-md bg-white rounded-2xl shadow-2xl p-8 sm:p-10 space-y-6 transform transition-transform duration-300 hover:-translate-y-1 hover:shadow-2xl">
-          <h2 className="text-3xl font-extrabold text-center text-blue-700">
+        <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-6 sm:p-8 space-y-5">
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-center text-blue-700">
             Login
           </h2>
           <p className="text-sm text-center text-gray-500">
             Welcome back! Please login to continue.
           </p>
 
-          <form onSubmit={handleSubmit} className="space-y-5">
+          <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
             <div>
-              <label
-                htmlFor="email"
-                className="block text-sm font-medium text-gray-700"
-              >
+              <label className="block text-sm font-medium text-gray-700">
                 Email Address
               </label>
               <input
                 type="email"
-                id="email"
-                className="w-full mt-1 px-4 py-2 border border-gray-300 rounded-md text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-blue-500 focus:scale-105 transition-transform duration-200"
                 ref={emailRef}
                 required
+                className="w-full mt-1 px-4 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition-transform duration-200"
               />
             </div>
 
             <div>
-              <label
-                htmlFor="password"
-                className="block text-sm font-medium text-gray-700"
-              >
+              <label className="block text-sm font-medium text-gray-700">
                 Password
               </label>
               <div className="relative">
                 <input
                   type={showPassword ? "text" : "password"}
-                  id="password"
-                  className="w-full mt-1 px-4 py-2 border border-gray-300 rounded-md pr-10 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-blue-500 focus:scale-105 transition-transform duration-200"
                   ref={passwordRef}
                   required
+                  className="w-full mt-1 px-4 py-2 border border-gray-300 rounded-md pr-10 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition-transform duration-200"
                 />
                 <button
                   type="button"
